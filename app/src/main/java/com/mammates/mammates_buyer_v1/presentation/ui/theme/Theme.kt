@@ -1,4 +1,4 @@
-package com.mammates.mammates_buyer_v1.ui.theme
+package com.mammates.mammates_buyer_v1.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

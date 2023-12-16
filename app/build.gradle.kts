@@ -53,6 +53,9 @@ android {
 
 dependencies {
 
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
     // Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
@@ -69,6 +72,8 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation ("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation ("androidx.compose.material:material-icons-extended:1.5.4")
+    implementation("androidx.compose.material:material:1.5.4")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0-rc01")
 
     // Dagger-Hilt
     implementation("com.google.dagger:hilt-android:2.48")
