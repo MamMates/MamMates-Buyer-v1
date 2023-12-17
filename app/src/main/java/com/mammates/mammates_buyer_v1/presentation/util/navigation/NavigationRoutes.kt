@@ -12,6 +12,7 @@ sealed class NavigationRoutes(val route: String) {
 
     data object Main : NavigationRoutes("main") {
         data object Home : NavigationRoutes("home")
+        data object Search : NavigationRoutes("search")
         data object Order : NavigationRoutes("order")
         data object Account : NavigationRoutes("account")
         data object AccountSetting : NavigationRoutes("account_setting")

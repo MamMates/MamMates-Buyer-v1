@@ -22,7 +22,19 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.OnActiveSearch -> {
+                _state.value = _state.value.copy(
+                    isActiveSearch = event.isActive,
+                )
+            }
 
+            is HomeEvent.OnChangeSearchText -> {
+                _state.value = _state.value.copy(
+                    searchText = event.text,
+                )
+            }
+        }
     }
 
     private fun getInitialValue() {
