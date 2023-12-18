@@ -4,6 +4,6 @@ data class HomeState(
     val isOnBoarding: Boolean = false,
     val token: String = "",
     val isLoading: Boolean = false,
-    val searchText : String = "",
-    val isActiveSearch : Boolean = false,
+    val searchText: String = "",
+    val isActiveSearch: Boolean = false,
 )

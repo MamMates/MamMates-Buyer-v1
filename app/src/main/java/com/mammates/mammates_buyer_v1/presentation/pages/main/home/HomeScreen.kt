@@ -2,18 +2,14 @@ package com.mammates.mammates_buyer_v1.presentation.pages.main.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -48,7 +44,7 @@ fun HomeScreen(
 
     val pullRefreshState = rememberPullRefreshState(refreshing = state.isLoading, onRefresh = {})
     val scrollState = rememberScrollState()
-    val listDummy = listOf(1, 2, 3,4 , 5, 6, 7, 8, 9, 10)
+    val listDummy = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
 //    if (!state.isOnBoarding && state.token.isEmpty()) {
 //        LaunchedEffect(key1 = Unit) {
@@ -93,7 +89,7 @@ fun HomeScreen(
                         color = MaterialTheme.colorScheme.background,
                         shape = RoundedCornerShape(100.dp)
                     )
-                    .clickable  {
+                    .clickable {
                         navController.navigate(NavigationRoutes.Main.Search.route)
                     },
                 value = state.searchText,
@@ -111,8 +107,8 @@ fun HomeScreen(
                 color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(10.dp))
-            LazyRow(){
-                items(listDummy){
+            LazyRow {
+                items(listDummy) {
                     CardFood(
                         name = "Donut",
                         price = 5000,
@@ -129,8 +125,8 @@ fun HomeScreen(
                 color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(10.dp))
-            LazyRow(){
-                items(listDummy){
+            LazyRow {
+                items(listDummy) {
                     CardStore(
                         name = "Toko Pak Tude",
                         address = "Jl. Donut Ubi Mawar Terbang III",

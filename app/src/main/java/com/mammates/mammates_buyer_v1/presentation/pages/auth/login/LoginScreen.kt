@@ -30,10 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.mammates.mammates_buyer_v1.R
+import com.mammates.mammates_buyer_v1.presentation.component.loading.LoadingAnimation
 import com.mammates.mammates_buyer_v1.presentation.component.text_field.PasswordTextField
 import com.mammates.mammates_buyer_v1.presentation.component.text_field.PrimaryTextField
 import com.mammates.mammates_buyer_v1.presentation.pages.auth.login.component.LoginTitle
-import com.mammates.mammates_buyer_v1.presentation.component.loading.LoadingAnimation
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
 
 

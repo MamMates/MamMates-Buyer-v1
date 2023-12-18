@@ -1,9 +1,11 @@
-package com.mammates.mammates_buyer_v1.domain.use_case.auth
+package com.mammates.mammates_buyer_v1.domain.use_case.food
 
 import com.mammates.mammates_buyer_v1.common.Resource
-import com.mammates.mammates_buyer_v1.domain.repository.AuthRepository
+import com.mammates.mammates_buyer_v1.domain.model.FoodItem
+import com.mammates.mammates_buyer_v1.domain.repository.FoodRepository
 import com.mammates.mammates_buyer_v1.util.ErrorMessage
 import com.mammates.mammates_buyer_v1.util.HttpError
+import com.mammates.mammates_buyer_v1.util.toListFoodItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.json.JSONException
@@ -12,21 +14,19 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class AuthRegisterUseCase @Inject constructor(
-    private val authRepository: AuthRepository
+class GetSearchFoodUseCase @Inject constructor(
+    private val foodRepository: FoodRepository
 ) {
-
     operator fun invoke(
-        buyer: String,
-        email: String,
-        password: String,
-        passwordConfirm: String
-    ): Flow<Resource<String>> = flow {
+        token: String,
+        keywords: String
+    ): Flow<Resource<List<FoodItem>>> = flow {
         try {
             emit(Resource.Loading())
-            val message =
-                authRepository.authRegister(buyer, email, password, passwordConfirm).message
-            emit(Resource.Success(message))
+            val list = foodRepository.getSearchFood(token, keywords).data?.toListFoodItem()
+            list?.let {
+                emit(Resource.Success(list))
+            }
         } catch (e: HttpException) {
             val errorMessage = e.response()?.errorBody()
             errorMessage?.let {

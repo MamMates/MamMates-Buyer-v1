@@ -1,4 +1,4 @@
-package com.mammates.mammates_buyer_v1.presentation.pages.main.store.component
+package com.mammates.mammates_buyer_v1.presentation.pages.main.order_detail.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -14,28 +13,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.mammates.mammates_buyer_v1.common.Constants
-import com.mammates.mammates_buyer_v1.presentation.component.rating.RatingDisplay
-import com.mammates.mammates_buyer_v1.util.Rating
 
 @Composable
-fun CardFoodStore(
+fun CardOrderFood(
     modifier: Modifier = Modifier,
     foodName: String,
-    rating: Rating,
-    price: Int,
+    quantity: Int,
     image: String?,
-    quantityValue: Int,
-    onAddQuantity: () -> Unit,
-    onRemoveQuantity: () -> Unit
+    price: Int
 ) {
+
+    val context = LocalContext.current
+
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 10.dp),
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
@@ -47,51 +46,42 @@ fun CardFoodStore(
             } else {
                 Constants.DUMMY_PHOTO_FOOD
             },
-            contentDescription = "Food Thumbnail",
-            contentScale = ContentScale.Crop
-
+            contentDescription = "Food Picture",
+            contentScale = ContentScale.Crop,
         )
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(modifier = Modifier.width(15.dp))
         Column {
             Text(
+                modifier = Modifier.fillMaxWidth(),
                 text = foodName,
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onBackground
             )
-            RatingDisplay(rating = rating)
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Quantity: $quantity",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline
+            )
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Rp. $price",
                 style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.End
             )
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.End
-            ) {
-                AddRemoveItem(
-                    quantityValue = quantityValue,
-                    onAddQuantity = onAddQuantity,
-                    onRemoveQuantity = onRemoveQuantity,
-                )
-            }
 
         }
-
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CardFoodStorePreview() {
-    CardFoodStore(
-        rating = Rating.TWO,
-        foodName = "Donut Keju Suka Terbang",
-        price = 5000,
-        image = "",
-        quantityValue = 0,
-        onAddQuantity = {},
-        onRemoveQuantity = {}
+fun CardOrderFoodPreview() {
+    CardOrderFood(
+        foodName = "Donut Kentang rasa coklat",
+        quantity = 4,
+        price = 20000,
+        image = ""
     )
 }

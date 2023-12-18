@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material3.Button
@@ -28,8 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.mammates.mammates_buyer_v1.presentation.component.text.TextLabelValue
 import com.mammates.mammates_buyer_v1.presentation.pages.main.store.component.CardFoodStore
-import com.mammates.mammates_buyer_v1.util.Rating
 
 @Composable
 fun StoreScreen(
@@ -38,17 +36,16 @@ fun StoreScreen(
     onEvent: (StoreEvent) -> Unit
 ) {
 
-    val id = (1..10).toList()
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 35.dp),
     ) {
-        LazyColumn (
+        LazyColumn(
             modifier = Modifier.padding(bottom = 70.dp),
         ) {
-            item{
+            item {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     text = "Pecel Lele Bro Waw Murah Meriah",
@@ -75,44 +72,50 @@ fun StoreScreen(
                 }
                 Spacer(modifier = Modifier.height(25.dp))
             }
-            items(id) { item ->
+            items(state.foods, key = { it.id }) { item ->
                 CardFoodStore(
-                    foodName = "Donut Kentang Rasa Coklat",
-                    rating = Rating.THREE,
-                    price = 5000,
-                    image = null,
-                    isValid = true,
-                    quantityValue = state.quantity.getOrElse(item) {
-                        onEvent(StoreEvent.PutMapQuantity(item))
+                    foodName = item.name,
+                    rating = item.rating,
+                    price = item.price,
+                    image = item.image,
+                    quantityValue = state.quantity.getOrElse(item.id) {
+                        onEvent(StoreEvent.PutMapQuantity(item.id))
                         0
                     },
                     onAddQuantity = {
-                        onEvent(StoreEvent.OnAddQuantity(item))
+                        onEvent(StoreEvent.OnAddQuantity(item.id))
                     },
                     onRemoveQuantity = {
-                        onEvent(StoreEvent.OnRemoveQuantity(item))
+                        onEvent(StoreEvent.OnRemoveQuantity(item.id))
                     }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
             }
         }
         Box(
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
                 .background(
                     color = MaterialTheme.colorScheme.background
                 )
                 .padding(vertical = 15.dp)
 
-        ){
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter),
-                onClick = {
-                    onEvent(StoreEvent.OnSubmitOrder)
+        ) {
+            Column {
+                TextLabelValue(
+                    label = "Total:",
+                    value = "Rp. ${state.total}"
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onClick = {
+                        onEvent(StoreEvent.OnSubmitOrder)
+                    }
+                ) {
+                    Text(text = "Buy")
                 }
-            ) {
-                Text(text = "Buy")
             }
         }
     }

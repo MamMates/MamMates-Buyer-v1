@@ -13,6 +13,7 @@ import com.mammates.mammates_buyer_v1.presentation.pages.main.home.HomeScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.home.HomeViewModel
 import com.mammates.mammates_buyer_v1.presentation.pages.main.order.OrderScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.order.OrderViewModel
+import com.mammates.mammates_buyer_v1.presentation.pages.main.order_detail.OrderDetailScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.SearchScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.SearchViewModel
 import com.mammates.mammates_buyer_v1.presentation.pages.main.store.StoreScreen
@@ -54,13 +55,17 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
         composable(route = NavigationRoutes.Main.Search.route) {
             val viewModel = hiltViewModel<SearchViewModel>()
             val state by viewModel.state.collectAsState()
+            val foods by viewModel.foods.collectAsState()
+            val keywords by viewModel.keywords.collectAsState()
             SearchScreen(
                 navController = navController,
                 state = state,
-                onEvent = viewModel::onEvent
+                onEvent = viewModel::onEvent,
+                foods = foods,
+                keywords = keywords
             )
         }
-        composable(route = NavigationRoutes.Main.Store.route){
+        composable(route = NavigationRoutes.Main.Store.route) {
             val viewModel = hiltViewModel<StoreViewModel>()
             val state by viewModel.state.collectAsState()
             StoreScreen(
@@ -68,6 +73,12 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                 state = state,
                 onEvent = viewModel::onEvent
             )
+        }
+
+        composable(
+            route = NavigationRoutes.Main.OrderConfirm.route,
+        ) {
+            OrderDetailScreen()
         }
 
     }

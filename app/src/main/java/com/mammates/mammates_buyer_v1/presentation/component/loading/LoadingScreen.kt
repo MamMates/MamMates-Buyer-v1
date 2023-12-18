@@ -1,7 +1,6 @@
 package com.mammates.mammates_buyer_v1.presentation.component.loading
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -12,8 +11,7 @@ fun LoadingScreen(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
         LoadingAnimation()

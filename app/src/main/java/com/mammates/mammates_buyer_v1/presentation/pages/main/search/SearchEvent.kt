@@ -1,3 +1,5 @@
 package com.mammates.mammates_buyer_v1.presentation.pages.main.search
 
-sealed class SearchEvent
+sealed class SearchEvent {
+    data class OnSearchItem(val keywords: String) : SearchEvent()
+}

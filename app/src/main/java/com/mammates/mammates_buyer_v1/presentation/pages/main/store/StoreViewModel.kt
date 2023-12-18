@@ -32,8 +32,9 @@ class StoreViewModel @Inject constructor(
                         } else {
                             it.value
                         }
-                    }
+                    },
                 )
+                getTotal()
             }
 
             is StoreEvent.OnRemoveQuantity -> {
@@ -46,6 +47,7 @@ class StoreViewModel @Inject constructor(
                         }
                     }
                 )
+                getTotal()
             }
 
             StoreEvent.OnSubmitOrder -> {
@@ -53,5 +55,23 @@ class StoreViewModel @Inject constructor(
             }
         }
     }
+
+    private fun getPriceFromQuantity(quantity: Int, price: Int): Int {
+        return quantity * price
+    }
+
+    private fun getTotal() {
+        var total = 0
+        _state.value.quantity.mapValues { mapItem ->
+            total += getPriceFromQuantity(
+                mapItem.value,
+                _state.value.foods.find { it.id == mapItem.key }?.price ?: 0
+            )
+        }
+        _state.value = _state.value.copy(
+            total = total
+        )
+    }
+
 
 }

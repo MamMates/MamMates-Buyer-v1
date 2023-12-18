@@ -3,17 +3,22 @@ package com.mammates.mammates_buyer_v1.di
 import android.content.Context
 import com.mammates.mammates_buyer_v1.common.Constants
 import com.mammates.mammates_buyer_v1.data.repository.AuthRepositoryImpl
+import com.mammates.mammates_buyer_v1.data.repository.FoodRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.repository.IntroRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.repository.TokenRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.source.local.IntroPreference
 import com.mammates.mammates_buyer_v1.data.source.local.TokenPreference
 import com.mammates.mammates_buyer_v1.data.source.remote.MamMatesApi
 import com.mammates.mammates_buyer_v1.domain.repository.AuthRepository
+import com.mammates.mammates_buyer_v1.domain.repository.FoodRepository
 import com.mammates.mammates_buyer_v1.domain.repository.IntroRepository
 import com.mammates.mammates_buyer_v1.domain.repository.TokenRepository
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthLoginUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthRegisterUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthUseCases
+import com.mammates.mammates_buyer_v1.domain.use_case.food.FoodUseCases
+import com.mammates.mammates_buyer_v1.domain.use_case.food.GetSearchFoodUseCase
+import com.mammates.mammates_buyer_v1.domain.use_case.food.GetStoreFoodUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.intro.GetIntroIsDoneUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.intro.IntroUseCases
 import com.mammates.mammates_buyer_v1.domain.use_case.intro.SetIntroIsDoneUseCase
@@ -96,6 +101,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providesFoodRepository(mamMatesApi: MamMatesApi): FoodRepository {
+        return FoodRepositoryImpl(mamMatesApi)
+    }
+
+    @Provides
+    @Singleton
     fun providesIntroUseCase(introRepository: IntroRepository): IntroUseCases {
         return IntroUseCases(
             getIntroIsDoneUseCase = GetIntroIsDoneUseCase(introRepository),
@@ -119,6 +130,15 @@ object AppModule {
         return AuthUseCases(
             authLoginUseCase = AuthLoginUseCase(authRepository),
             authRegisterUseCase = AuthRegisterUseCase(authRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providesFoodUseCases(foodRepository: FoodRepository): FoodUseCases {
+        return FoodUseCases(
+            getSearchFoodUseCase = GetSearchFoodUseCase(foodRepository),
+            getStoreFoodUseCase = GetStoreFoodUseCase(foodRepository)
         )
     }
 }

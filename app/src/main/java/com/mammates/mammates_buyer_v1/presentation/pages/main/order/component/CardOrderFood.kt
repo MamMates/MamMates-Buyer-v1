@@ -1,4 +1,4 @@
-package com.mammates.mammates_buyer_v1.presentation.pages.main.order_confirm.component
+package com.mammates.mammates_buyer_v1.presentation.pages.main.order.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

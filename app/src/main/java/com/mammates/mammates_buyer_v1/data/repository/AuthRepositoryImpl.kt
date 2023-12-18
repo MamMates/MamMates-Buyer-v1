@@ -1,10 +1,10 @@
 package com.mammates.mammates_buyer_v1.data.repository
 
 import com.mammates.mammates_buyer_v1.data.source.remote.MamMatesApi
-import com.mammates.mammates_buyer_v1.data.source.remote.dto.ResMamMates
+import com.mammates.mammates_buyer_v1.data.source.remote.dto.request.ReqLogin
+import com.mammates.mammates_buyer_v1.data.source.remote.dto.request.ReqRegister
+import com.mammates.mammates_buyer_v1.data.source.remote.dto.request.ResMamMates
 import com.mammates.mammates_buyer_v1.domain.repository.AuthRepository
-import com.mammates.mammates_seller_v1.data.source.remote.dto.ReqLogin
-import com.mammates.mammates_seller_v1.data.source.remote.dto.ReqRegister
 import retrofit2.Response
 import javax.inject.Inject
 
