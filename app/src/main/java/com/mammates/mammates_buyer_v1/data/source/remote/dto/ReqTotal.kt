@@ -5,17 +5,18 @@ import com.google.gson.annotations.SerializedName
 data class ReqTotal(
 
 	@field:SerializedName("orders")
-	val orders: List<OrdersBuyerItem?>? = null,
+	val orders: List<OrderBuyerItem?>? = null,
 
 	@field:SerializedName("seller_id")
 	val sellerId: Int? = null
 )
 
-data class OrdersBuyerItem(
+data class OrderBuyerItem(
+
+	@field:SerializedName("food_id")
+	val foodId: Int? = null,
 
 	@field:SerializedName("quantity")
 	val quantity: Int? = null,
 
-	@field:SerializedName("food_id")
-	val foodId: Int? = null
 )

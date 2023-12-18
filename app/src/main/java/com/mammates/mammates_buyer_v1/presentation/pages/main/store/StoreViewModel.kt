@@ -2,6 +2,7 @@ package com.mammates.mammates_buyer_v1.presentation.pages.main.store
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.mammates.mammates_buyer_v1.util.toListOrderBuyerItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -48,7 +49,7 @@ class StoreViewModel @Inject constructor(
             }
 
             StoreEvent.OnSubmitOrder -> {
-                Log.i("StoreViewModel", _state.value.quantity.toString())
+                Log.i("StoreViewModel", _state.value.quantity.toListOrderBuyerItem().toString())
             }
         }
     }
