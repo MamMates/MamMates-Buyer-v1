@@ -15,6 +15,8 @@ import com.mammates.mammates_buyer_v1.presentation.pages.main.order.OrderScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.order.OrderViewModel
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.SearchScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.SearchViewModel
+import com.mammates.mammates_buyer_v1.presentation.pages.main.store.StoreScreen
+import com.mammates.mammates_buyer_v1.presentation.pages.main.store.StoreViewModel
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
 
 fun NavGraphBuilder.mainGraph(navController: NavController) {
@@ -53,6 +55,15 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
             val viewModel = hiltViewModel<SearchViewModel>()
             val state by viewModel.state.collectAsState()
             SearchScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent
+            )
+        }
+        composable(route = NavigationRoutes.Main.Store.route){
+            val viewModel = hiltViewModel<StoreViewModel>()
+            val state by viewModel.state.collectAsState()
+            StoreScreen(
                 navController = navController,
                 state = state,
                 onEvent = viewModel::onEvent

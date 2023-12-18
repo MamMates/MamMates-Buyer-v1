@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -18,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.mammates.mammates_buyer_v1.presentation.component.text_field.SearchTextField
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.component.CardSearchFood
+import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
 import com.mammates.mammates_buyer_v1.util.Rating
 
 @Composable
@@ -27,7 +29,9 @@ fun SearchScreen(
     onEvent: (SearchEvent) -> Unit
 ) {
 
-    val focusRequester = FocusRequester()
+    val focusRequester = remember{
+        FocusRequester()
+    }
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
@@ -60,7 +64,9 @@ fun SearchScreen(
                     price = 5000,
                     image = "",
                     isValid = true,
-                    onClickCard = {},
+                    onClickCard = {
+                                  navController.navigate(NavigationRoutes.Main.Store.route)
+                    },
                     storeName = "Toko Pak Tude"
                 )
                 Spacer(modifier = Modifier.height(20.dp))
