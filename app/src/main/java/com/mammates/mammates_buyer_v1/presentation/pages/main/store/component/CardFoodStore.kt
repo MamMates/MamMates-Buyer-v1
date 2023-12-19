@@ -49,7 +49,6 @@ fun CardFoodStore(
             },
             contentDescription = "Food Thumbnail",
             contentScale = ContentScale.Crop
-
         )
         Spacer(modifier = Modifier.width(20.dp))
         Column {

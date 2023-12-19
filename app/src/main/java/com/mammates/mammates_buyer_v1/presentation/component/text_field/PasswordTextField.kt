@@ -52,6 +52,7 @@ fun PasswordTextField(
             focusedContainerColor = MaterialTheme.colorScheme.background,
             unfocusedContainerColor = MaterialTheme.colorScheme.background,
             disabledContainerColor = MaterialTheme.colorScheme.background,
+            errorContainerColor = MaterialTheme.colorScheme.background,
         ),
         trailingIcon = {
             IconButton(

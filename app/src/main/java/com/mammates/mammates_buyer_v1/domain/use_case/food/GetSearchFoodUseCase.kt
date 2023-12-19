@@ -1,7 +1,7 @@
 package com.mammates.mammates_buyer_v1.domain.use_case.food
 
 import com.mammates.mammates_buyer_v1.common.Resource
-import com.mammates.mammates_buyer_v1.domain.model.FoodItem
+import com.mammates.mammates_buyer_v1.domain.model.FoodSearch
 import com.mammates.mammates_buyer_v1.domain.repository.FoodRepository
 import com.mammates.mammates_buyer_v1.util.ErrorMessage
 import com.mammates.mammates_buyer_v1.util.HttpError
@@ -20,7 +20,7 @@ class GetSearchFoodUseCase @Inject constructor(
     operator fun invoke(
         token: String,
         keywords: String
-    ): Flow<Resource<List<FoodItem>>> = flow {
+    ): Flow<Resource<List<FoodSearch>>> = flow {
         try {
             emit(Resource.Loading())
             val list = foodRepository.getSearchFood(token, keywords).data?.toListFoodItem()

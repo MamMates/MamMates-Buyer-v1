@@ -18,12 +18,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.mammates.mammates_buyer_v1.domain.model.FoodItem
+import com.mammates.mammates_buyer_v1.domain.model.FoodSearch
+import com.mammates.mammates_buyer_v1.presentation.component.dialog.ErrorDialog
 import com.mammates.mammates_buyer_v1.presentation.component.loading.LoadingScreen
 import com.mammates.mammates_buyer_v1.presentation.component.text_field.SearchTextField
+import com.mammates.mammates_buyer_v1.presentation.pages.main.order.OrderEvent
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.component.CardSearchFood
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.component.SearchNotFound
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
+import com.mammates.mammates_buyer_v1.util.HttpError
 import com.mammates.mammates_buyer_v1.util.Rating
 
 @Composable
@@ -31,7 +34,7 @@ fun SearchScreen(
     navController: NavController,
     state: SearchState,
     onEvent: (SearchEvent) -> Unit,
-    foods: List<FoodItem>,
+    foods: List<FoodSearch>,
     keywords: String,
 ) {
 
@@ -43,7 +46,34 @@ fun SearchScreen(
         focusRequester.requestFocus()
     }
 
-//
+    LaunchedEffect(key1 = state.token) {
+        if (state.token.isEmpty()) {
+            navController.navigate(route = NavigationRoutes.Auth.route) {
+                popUpTo(route = NavigationRoutes.Main.route) {
+                    inclusive = true
+                }
+            }
+        }
+    }
+
+    if (state.isNotAuthorizeDialogOpen) {
+        ErrorDialog(
+            message = HttpError.UNAUTHORIZED.message,
+            onConfirm = {
+                onEvent(SearchEvent.ClearToken)
+            },
+            title = "Unauthorized User !"
+        )
+    }
+
+    if (!state.errorMessage.isNullOrEmpty()) {
+        ErrorDialog(
+            message = state.errorMessage,
+            onConfirm = {
+                onEvent(SearchEvent.OnDismissDialog)
+            }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -75,17 +105,16 @@ fun SearchScreen(
                 )
             } else {
                 LazyColumn {
-                    items(foods) {
+                    items(foods) {item ->
                         CardSearchFood(
-                            rating = Rating.TWO,
-                            foodName = "Donut Keju Suka Terbang",
-                            price = 5000,
-                            image = "",
-                            isValid = true,
+                            rating = item.rating,
+                            foodName = item.name,
+                            price = item.price,
+                            image = item.image,
                             onClickCard = {
-                                navController.navigate(NavigationRoutes.Main.Store.route)
+                                navController.navigate(NavigationRoutes.Main.Store.route + "?store_id=${item.sellerId}")
                             },
-                            storeName = "Toko Pak Tude"
+                            storeName = item.seller
                         )
                         Spacer(modifier = Modifier.height(20.dp))
                     }
@@ -103,7 +132,16 @@ fun SearchScreenPreview() {
         navController = rememberNavController(),
         state = SearchState(),
         onEvent = {},
-        foods = listOf(),
+        foods = listOf(
+            FoodSearch(
+                id = 1,
+                name = "Buah",
+                seller = "Toko Tude",
+                rating = Rating.THREE,
+                price = 5000,
+                sellerId = 1
+            )
+        ),
         keywords = ""
     )
 }

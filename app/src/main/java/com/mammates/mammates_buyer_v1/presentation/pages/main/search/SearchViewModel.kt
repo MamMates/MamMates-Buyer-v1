@@ -1,12 +1,12 @@
 package com.mammates.mammates_buyer_v1.presentation.pages.main.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mammates.mammates_buyer_v1.common.Resource
-import com.mammates.mammates_buyer_v1.domain.model.FoodItem
+import com.mammates.mammates_buyer_v1.domain.model.FoodSearch
 import com.mammates.mammates_buyer_v1.domain.use_case.food.FoodUseCases
 import com.mammates.mammates_buyer_v1.domain.use_case.token.TokenUseCases
+import com.mammates.mammates_buyer_v1.util.HttpError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
@@ -32,7 +33,7 @@ class SearchViewModel @Inject constructor(
     private val _keywords = MutableStateFlow("")
     val keywords = _keywords.asStateFlow()
 
-    private val _foods = MutableStateFlow(listOf<FoodItem>())
+    private val _foods = MutableStateFlow(listOf<FoodSearch>())
     val foods = keywords
         .debounce(500L)
         .combine(_foods) { keywords, food ->
@@ -57,6 +58,21 @@ class SearchViewModel @Inject constructor(
             is SearchEvent.OnSearchItem -> {
                 _keywords.value = event.keywords
             }
+
+            SearchEvent.OnDismissDialog -> {
+                _state.value = _state.value.copy(
+                    errorMessage = null
+                )
+            }
+
+            SearchEvent.ClearToken -> {
+                viewModelScope.launch {
+                    tokenUseCases.clearTokenUseCase()
+                }
+                _state.value = _state.value.copy(
+                    token = ""
+                )
+            }
         }
     }
 
@@ -73,20 +89,35 @@ class SearchViewModel @Inject constructor(
         ).onEach { result ->
             when (result) {
                 is Resource.Error -> {
+                    if (result.message.equals(HttpError.UNAUTHORIZED.message)) {
+                        _state.value = _state.value.copy(
+                            isNotAuthorizeDialogOpen = true,
+                            isLoading = false,
+                        )
+                        return@onEach
+                    }
 
+                    _state.value = _state.value.copy(
+                        errorMessage = result.message,
+                        isLoading = false
+                    )
                 }
 
                 is Resource.Loading -> {
-
+                    _state.value = _state.value.copy(
+                        isLoading = true
+                    )
                 }
 
                 is Resource.Success -> {
-
+                    _foods.value = result.data ?: emptyList()
+                    _state.value = _state.value.copy(
+                        isLoading = false
+                    )
                 }
             }
 
         }.launchIn(viewModelScope)
-        Log.i("SearchViewModel", "Sudah disearch")
     }
 
 }

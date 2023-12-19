@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class ReqTotal(
 
-    @field:SerializedName("orders")
-    val orders: List<OrderBuyerItem?>? = null,
+    @field:SerializedName("foods")
+    val foods: List<OrderBuyerItem>? = null,
 
     @field:SerializedName("seller_id")
     val sellerId: Int? = null

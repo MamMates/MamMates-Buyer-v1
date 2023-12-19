@@ -26,4 +26,8 @@ class FoodRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun getFoodRecommendation(token: String): ResMamMates<SearchFoodsDto> {
+        return api.getFoodRecommendation(token)
+    }
+
 }

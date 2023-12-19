@@ -35,7 +35,6 @@ fun CardSearchFood(
     rating: Rating,
     price: Int,
     image: String?,
-    isValid: Boolean,
     onClickCard: () -> Unit
 ) {
     Column(
@@ -73,23 +72,11 @@ fun CardSearchFood(
                     Constants.DUMMY_PHOTO_FOOD
                 },
                 contentDescription = "Food Thumbnail",
-                colorFilter = if (!isValid) {
-                    ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
-                } else {
-                    null
-                },
                 contentScale = ContentScale.Crop
 
             )
             Spacer(modifier = Modifier.width(20.dp))
             Column {
-                if (!isValid) {
-                    Text(
-                        text = "Not Updated !",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.error
-                    )
-                }
                 Text(
                     text = foodName,
                     style = MaterialTheme.typography.titleSmall,
@@ -117,7 +104,6 @@ fun CardSearchFoodPreview() {
         foodName = "Donut Keju Suka Terbang",
         price = 5000,
         image = "",
-        isValid = true,
         onClickCard = {},
         storeName = "Toko Pak Tude"
     )

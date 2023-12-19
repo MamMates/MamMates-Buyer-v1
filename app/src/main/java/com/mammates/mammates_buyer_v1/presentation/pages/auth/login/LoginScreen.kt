@@ -37,7 +37,6 @@ import com.mammates.mammates_buyer_v1.presentation.pages.auth.login.component.Lo
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navController: NavController,
@@ -153,8 +152,7 @@ fun LoginScreen(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    // TODO Submit Button Login
-//                    onEvent(LoginEvent.OnLogin)
+                    onEvent(LoginEvent.OnLogin)
                 }
             ) {
                 Text(

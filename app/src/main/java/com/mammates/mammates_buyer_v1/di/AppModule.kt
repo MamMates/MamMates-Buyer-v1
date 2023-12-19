@@ -5,6 +5,7 @@ import com.mammates.mammates_buyer_v1.common.Constants
 import com.mammates.mammates_buyer_v1.data.repository.AuthRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.repository.FoodRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.repository.IntroRepositoryImpl
+import com.mammates.mammates_buyer_v1.data.repository.OrderRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.repository.TokenRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.source.local.IntroPreference
 import com.mammates.mammates_buyer_v1.data.source.local.TokenPreference
@@ -12,16 +13,22 @@ import com.mammates.mammates_buyer_v1.data.source.remote.MamMatesApi
 import com.mammates.mammates_buyer_v1.domain.repository.AuthRepository
 import com.mammates.mammates_buyer_v1.domain.repository.FoodRepository
 import com.mammates.mammates_buyer_v1.domain.repository.IntroRepository
+import com.mammates.mammates_buyer_v1.domain.repository.OrderRepository
 import com.mammates.mammates_buyer_v1.domain.repository.TokenRepository
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthLoginUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthRegisterUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthUseCases
 import com.mammates.mammates_buyer_v1.domain.use_case.food.FoodUseCases
+import com.mammates.mammates_buyer_v1.domain.use_case.food.GetFoodRecommendationUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.food.GetSearchFoodUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.food.GetStoreFoodUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.intro.GetIntroIsDoneUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.intro.IntroUseCases
 import com.mammates.mammates_buyer_v1.domain.use_case.intro.SetIntroIsDoneUseCase
+import com.mammates.mammates_buyer_v1.domain.use_case.order.GetOrderDetailUseCase
+import com.mammates.mammates_buyer_v1.domain.use_case.order.GetOrdersUseCase
+import com.mammates.mammates_buyer_v1.domain.use_case.order.OrderUseCases
+import com.mammates.mammates_buyer_v1.domain.use_case.order.PostOrderUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.token.ClearTokenUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.token.GetTokenUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.token.SetTokenUseCase
@@ -107,6 +114,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providesOrderRepository(mamMatesApi: MamMatesApi): OrderRepository {
+        return OrderRepositoryImpl(mamMatesApi)
+    }
+
+    @Provides
+    @Singleton
     fun providesIntroUseCase(introRepository: IntroRepository): IntroUseCases {
         return IntroUseCases(
             getIntroIsDoneUseCase = GetIntroIsDoneUseCase(introRepository),
@@ -138,7 +151,18 @@ object AppModule {
     fun providesFoodUseCases(foodRepository: FoodRepository): FoodUseCases {
         return FoodUseCases(
             getSearchFoodUseCase = GetSearchFoodUseCase(foodRepository),
-            getStoreFoodUseCase = GetStoreFoodUseCase(foodRepository)
+            getStoreFoodUseCase = GetStoreFoodUseCase(foodRepository),
+            getFoodRecommendationUseCase = GetFoodRecommendationUseCase(foodRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providesOrderUseCases(orderRepository: OrderRepository): OrderUseCases {
+        return OrderUseCases(
+            getOrdersUseCase = GetOrdersUseCase(orderRepository),
+            getOrderDetailUseCase = GetOrderDetailUseCase(orderRepository),
+            postOrderUseCase = PostOrderUseCase(orderRepository)
         )
     }
 }

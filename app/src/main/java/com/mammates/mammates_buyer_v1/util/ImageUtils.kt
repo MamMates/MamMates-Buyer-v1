@@ -12,6 +12,7 @@ import java.util.Locale
 class ImageUtils {
     companion object {
 
+        private const val MAXIMAL_SIZE = 200000
         private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
         private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(Date())
 

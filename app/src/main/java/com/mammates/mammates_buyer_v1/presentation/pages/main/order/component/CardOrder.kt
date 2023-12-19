@@ -31,19 +31,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mammates.mammates_buyer_v1.domain.model.FoodOrderItem
+import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.FoodOrderItemDto
+import com.mammates.mammates_buyer_v1.domain.model.FoodOrder
 import com.mammates.mammates_buyer_v1.util.StatusOrder
+import com.mammates.mammates_buyer_v1.util.toFoodOrder
 
 @Composable
 fun CardOrder(
     modifier: Modifier = Modifier,
     statusOrder: StatusOrder,
-    buyer: String,
+    store: String,
     total: Int,
-    foods: List<FoodOrderItem>,
-    onConfirmOrder: () -> Unit,
+    foods: List<FoodOrder>,
     onSeeDetail: () -> Unit,
-    onCancelOrder: () -> Unit,
 ) {
 
     var expanded by remember {
@@ -63,7 +63,7 @@ fun CardOrder(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = buyer,
+                text = store,
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.inverseSurface
             )
@@ -170,26 +170,26 @@ fun CardOrder(
 @Composable
 fun CardOrderPreview() {
     CardOrder(
-        buyer = "Gede Mahardika",
+        store = "Gede Mahardika",
         statusOrder = StatusOrder.Unconfirmed,
         total = 40000,
         foods = listOf(
-            FoodOrderItem(
+            FoodOrderItemDto(
                 image = null,
                 name = "Donut Kentang Rasa Coklat",
                 quantity = 4,
                 price = 20000
             ),
-            FoodOrderItem(
+            FoodOrderItemDto(
                 image = null,
                 name = "Donut Kentang Rasa Coklat",
                 quantity = 4,
                 price = 20000
             ),
-        ),
-        onConfirmOrder = {},
+        ).map {
+              it.toFoodOrder()
+        },
         onSeeDetail = {},
-        onCancelOrder = {}
     )
 
 }

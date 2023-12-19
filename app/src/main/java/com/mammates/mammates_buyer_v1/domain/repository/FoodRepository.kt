@@ -13,4 +13,8 @@ interface FoodRepository {
         token: String,
         store: Int,
     ): ResMamMates<SearchFoodsDto>
+
+    suspend fun getFoodRecommendation(
+        token: String
+    ): ResMamMates<SearchFoodsDto>
 }
