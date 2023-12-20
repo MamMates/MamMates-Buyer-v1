@@ -167,7 +167,7 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.height(25.dp))
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "Popular Food",
+                    text = "Features Store",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

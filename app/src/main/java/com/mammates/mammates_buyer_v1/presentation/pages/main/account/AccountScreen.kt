@@ -34,9 +34,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.mammates.mammates_buyer_v1.common.Constants
+import com.mammates.mammates_buyer_v1.presentation.component.dialog.ConfirmDialog
+import com.mammates.mammates_buyer_v1.presentation.component.dialog.ErrorDialog
 import com.mammates.mammates_buyer_v1.presentation.component.loading.LoadingScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.account.component.CardAccount
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
+import com.mammates.mammates_buyer_v1.util.HttpError
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -72,6 +75,39 @@ fun AccountScreen(
             }
         }
     }
+
+    if (!state.errorMessage.isNullOrEmpty()) {
+        ErrorDialog(
+            message = state.errorMessage,
+            onConfirm = {
+                onEvent(AccountEvent.OnDismissDialog)
+            }
+        )
+    }
+    if (state.isNotAuthorizeDialogOpen) {
+        ErrorDialog(
+            message = HttpError.UNAUTHORIZED.message,
+            onConfirm = {
+                onEvent(AccountEvent.ClearToken)
+            }
+        )
+    }
+
+    if (state.isConfirmLogoutOpen) {
+        ConfirmDialog(
+            title = "Logout",
+            message = "Are you sure wanna logout ?",
+            onConfirm = {
+                onEvent(AccountEvent.OnDismissDialog)
+                onEvent(AccountEvent.ClearToken)
+            },
+            onDismiss = {
+                onEvent(AccountEvent.OnDismissDialog)
+            }
+        )
+    }
+
+
 
     Box(
         modifier = Modifier.pullRefresh(pullRefreshState)
