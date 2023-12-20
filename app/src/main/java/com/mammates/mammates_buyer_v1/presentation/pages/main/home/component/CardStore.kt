@@ -1,6 +1,7 @@
 package com.mammates.mammates_buyer_v1.presentation.pages.main.home.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,8 @@ fun CardStore(
     modifier: Modifier = Modifier,
     name: String,
     address: String,
-    image: String?
+    image: String?,
+    onCLick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -29,6 +31,9 @@ fun CardStore(
                 color = MaterialTheme.colorScheme.surface,
             )
             .width(230.dp)
+            .clickable {
+                onCLick()
+            }
     ) {
         AsyncImage(
             modifier = Modifier
@@ -72,6 +77,7 @@ fun CardStorePreview() {
     CardStore(
         name = "Toko Pak Tude",
         address = "Jl. Donut Ubi Mawar Terbang III",
-        image = null
+        image = null,
+        onCLick = {}
     )
 }

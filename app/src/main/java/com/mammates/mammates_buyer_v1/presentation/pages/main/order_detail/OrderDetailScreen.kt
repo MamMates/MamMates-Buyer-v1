@@ -146,6 +146,7 @@ fun OrderDetailScreen(
                         label = "Status",
                         statusOrder = state.status
                     )
+                    Spacer(modifier = Modifier.height(20.dp))
                 }
             }
         }

@@ -28,6 +28,7 @@ import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.OrderItemD
 import com.mammates.mammates_buyer_v1.presentation.component.dialog.ErrorDialog
 import com.mammates.mammates_buyer_v1.presentation.component.loading.LoadingScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.order.component.CardOrder
+import com.mammates.mammates_buyer_v1.presentation.pages.main.order.component.NoOrderLabel
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
 import com.mammates.mammates_buyer_v1.util.HttpError
 import com.mammates.mammates_buyer_v1.util.toOrder
@@ -101,18 +102,22 @@ fun OrderScreen(
                 .padding(start = 35.dp, end = 35.dp, top = 20.dp),
             contentAlignment = Alignment.TopCenter
         ) {
-            LazyColumn {
-                items(state.orders, key = { it.id }) { item ->
-                    CardOrder(
-                        statusOrder = item.status,
-                        store = item.store,
-                        total = item.total,
-                        foods = item.foods,
-                        onSeeDetail = {
-                            navController.navigate(NavigationRoutes.Main.OrderDetail.route + "?order_id=${item.id}")
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
+            if (state.orders.isEmpty()) {
+                NoOrderLabel()
+            } else {
+                LazyColumn {
+                    items(state.orders, key = { it.id }) { item ->
+                        CardOrder(
+                            statusOrder = item.status,
+                            store = item.store,
+                            total = item.total,
+                            foods = item.foods,
+                            onSeeDetail = {
+                                navController.navigate(NavigationRoutes.Main.OrderDetail.route + "?order_id=${item.id}")
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
                 }
             }
             PullRefreshIndicator(

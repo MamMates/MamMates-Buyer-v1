@@ -5,5 +5,5 @@ data class FoodRecommendation(
     val name: String,
     val price: Int,
     val storeId: Int,
-    val image : String? = null
+    val image: String? = null
 )

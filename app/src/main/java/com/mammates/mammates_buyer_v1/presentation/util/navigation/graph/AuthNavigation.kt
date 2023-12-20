@@ -7,8 +7,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.mammates.mammates_buyer_v1.presentation.pages.auth.forgot_passsword.ResetPasswordScreen
+import com.mammates.mammates_buyer_v1.presentation.pages.auth.forgot_passsword.ResetPasswordViewModel
 import com.mammates.mammates_buyer_v1.presentation.pages.auth.login.LoginScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.auth.login.LoginViewModel
+import com.mammates.mammates_buyer_v1.presentation.pages.auth.register.RegisterScreen
+import com.mammates.mammates_buyer_v1.presentation.pages.auth.register.RegisterViewModel
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
 
 fun NavGraphBuilder.authGraph(navController: NavController) {
@@ -27,10 +31,23 @@ fun NavGraphBuilder.authGraph(navController: NavController) {
             )
         }
         composable(route = NavigationRoutes.Auth.Register.route) {
+            val viewModel = hiltViewModel<RegisterViewModel>()
+            val state by viewModel.state.collectAsState()
+            RegisterScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent
+            )
 
         }
         composable(route = NavigationRoutes.Auth.ResetPassword.route) {
-
+            val viewModel = hiltViewModel<ResetPasswordViewModel>()
+            val state by viewModel.state.collectAsState()
+            ResetPasswordScreen(
+                navController = navController,
+                state = state,
+                onEvent = viewModel::onEvent
+            )
         }
     }
 }

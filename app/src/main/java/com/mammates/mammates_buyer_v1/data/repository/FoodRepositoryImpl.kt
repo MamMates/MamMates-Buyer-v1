@@ -1,7 +1,7 @@
 package com.mammates.mammates_buyer_v1.data.repository
 
 import com.mammates.mammates_buyer_v1.data.source.remote.MamMatesApi
-import com.mammates.mammates_buyer_v1.data.source.remote.dto.request.ResMamMates
+import com.mammates.mammates_buyer_v1.data.source.remote.dto.ResMamMates
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.SearchFoodsDto
 import com.mammates.mammates_buyer_v1.domain.repository.FoodRepository
 import javax.inject.Inject

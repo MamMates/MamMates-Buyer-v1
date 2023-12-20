@@ -99,9 +99,9 @@ fun CardOrder(
         ) {
             foods.forEach { item ->
                 CardOrderFood(
-                    foodName = item.name ?: "No Food Name",
-                    quantity = item.quantity ?: 0,
-                    price = item.price ?: 0,
+                    foodName = item.name,
+                    quantity = item.quantity,
+                    price = item.price,
                     image = item.image
                 )
                 Spacer(modifier = Modifier.height(20.dp))
@@ -187,7 +187,7 @@ fun CardOrderPreview() {
                 price = 20000
             ),
         ).map {
-              it.toFoodOrder()
+            it.toFoodOrder()
         },
         onSeeDetail = {},
     )

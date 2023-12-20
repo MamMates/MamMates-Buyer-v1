@@ -5,12 +5,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.request.OrderBuyerItem
+import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.AccountDto
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.FoodOrderItemDto
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.FoodsSearchItem
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.OrderDetailDto
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.OrderItemDto
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.OrdersDto
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.response.SearchFoodsDto
+import com.mammates.mammates_buyer_v1.domain.model.AccountBuyer
 import com.mammates.mammates_buyer_v1.domain.model.FoodOrder
 import com.mammates.mammates_buyer_v1.domain.model.FoodRecommendation
 import com.mammates.mammates_buyer_v1.domain.model.FoodSearch
@@ -152,5 +154,12 @@ fun OrderDetailDto.toOrderDetail(): OrderDetail {
             else -> StatusOrder.Unidentified
         }
     )
+}
 
+fun AccountDto.toAccountBuyer(): AccountBuyer {
+    return AccountBuyer(
+        image = account?.image,
+        fullName = account?.name ?: "No Name Provides",
+        email = account?.email ?: "No Email Provides"
+    )
 }

@@ -1,6 +1,5 @@
 package com.mammates.mammates_buyer_v1.domain.use_case.auth
 
-import android.util.Log
 import com.mammates.mammates_buyer_v1.common.Resource
 import com.mammates.mammates_buyer_v1.domain.repository.AuthRepository
 import com.mammates.mammates_buyer_v1.util.ErrorMessage

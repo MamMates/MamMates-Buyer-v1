@@ -16,16 +16,16 @@ import javax.inject.Inject
 class PostOrderUseCase @Inject constructor(
     private val orderRepository: OrderRepository
 ) {
-    operator fun  invoke(
+    operator fun invoke(
         token: String,
-        food : List<OrderBuyerItem>,
-        sellerId : Int
-    ) : Flow<Resource<String>> = flow{
+        food: List<OrderBuyerItem>,
+        sellerId: Int
+    ): Flow<Resource<String>> = flow {
         try {
             emit(Resource.Loading())
             val message = orderRepository.postOrder(token, food, sellerId).message
             emit(Resource.Success(message))
-        }catch (e: HttpException) {
+        } catch (e: HttpException) {
             val errorMessage = e.response()?.errorBody()
             errorMessage?.let {
                 try {

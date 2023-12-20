@@ -17,7 +17,7 @@ class AuthRegisterUseCase @Inject constructor(
 ) {
 
     operator fun invoke(
-        buyer: String,
+        name: String,
         email: String,
         password: String,
         passwordConfirm: String
@@ -25,7 +25,7 @@ class AuthRegisterUseCase @Inject constructor(
         try {
             emit(Resource.Loading())
             val message =
-                authRepository.authRegister(buyer, email, password, passwordConfirm).message
+                authRepository.authRegister(name, email, password, passwordConfirm).message
             emit(Resource.Success(message))
         } catch (e: HttpException) {
             val errorMessage = e.response()?.errorBody()

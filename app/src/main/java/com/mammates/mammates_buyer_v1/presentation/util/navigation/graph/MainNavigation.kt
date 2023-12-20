@@ -15,6 +15,7 @@ import com.mammates.mammates_buyer_v1.presentation.pages.main.account_setting.Ac
 import com.mammates.mammates_buyer_v1.presentation.pages.main.account_setting.AccountSettingViewModel
 import com.mammates.mammates_buyer_v1.presentation.pages.main.change_password.ChangePasswordScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.change_password.ChangePasswordViewModel
+import com.mammates.mammates_buyer_v1.presentation.pages.main.coming_soon.ComingSoonScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.home.HomeScreen
 import com.mammates.mammates_buyer_v1.presentation.pages.main.home.HomeViewModel
 import com.mammates.mammates_buyer_v1.presentation.pages.main.order.OrderScreen
@@ -128,6 +129,9 @@ fun NavGraphBuilder.mainGraph(navController: NavController) {
                 state = state,
                 onEvent = viewModel::onEvent
             )
+        }
+        composable(route = NavigationRoutes.Main.ComingSoon.route) {
+            ComingSoonScreen()
         }
 
     }

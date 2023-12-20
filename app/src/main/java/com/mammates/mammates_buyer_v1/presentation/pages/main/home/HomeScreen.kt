@@ -34,12 +34,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.currentStateAsState
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.mammates.mammates_buyer_v1.domain.model.featuredStore
 import com.mammates.mammates_buyer_v1.presentation.component.dialog.ErrorDialog
 import com.mammates.mammates_buyer_v1.presentation.component.loading.LoadingScreen
 import com.mammates.mammates_buyer_v1.presentation.component.text_field.SearchTextField
 import com.mammates.mammates_buyer_v1.presentation.pages.main.home.component.CardArticle
 import com.mammates.mammates_buyer_v1.presentation.pages.main.home.component.CardFood
 import com.mammates.mammates_buyer_v1.presentation.pages.main.home.component.CardStore
+import com.mammates.mammates_buyer_v1.presentation.pages.main.home.component.NoRecommendationLabel
 import com.mammates.mammates_buyer_v1.presentation.pages.main.home.component.cardArticleItems
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
 import com.mammates.mammates_buyer_v1.util.HttpError
@@ -54,7 +56,7 @@ fun HomeScreen(
         onEvent(HomeEvent.OnRefreshPage)
     })
     val scrollState = rememberScrollState()
-    val listDummy = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val lifecycleState by lifecycleOwner.lifecycle.currentStateAsState()
@@ -145,17 +147,21 @@ fun HomeScreen(
                     color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                LazyRow {
-                    items(state.foodsRecommendation) { item ->
-                        CardFood(
-                            modifier = Modifier.clickable {
-                                navController.navigate(NavigationRoutes.Main.Store.route + "?store_id=${item.storeId}")
-                            },
-                            name = item.name,
-                            price = item.price,
-                            image = item.image
-                        )
-                        Spacer(modifier = Modifier.width(20.dp))
+                if (state.foodsRecommendation.isEmpty()) {
+                    NoRecommendationLabel()
+                } else {
+                    LazyRow {
+                        items(state.foodsRecommendation) { item ->
+                            CardFood(
+                                modifier = Modifier.clickable {
+                                    navController.navigate(NavigationRoutes.Main.Store.route + "?store_id=${item.storeId}")
+                                },
+                                name = item.name,
+                                price = item.price,
+                                image = item.image
+                            )
+                            Spacer(modifier = Modifier.width(20.dp))
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(25.dp))
@@ -167,11 +173,14 @@ fun HomeScreen(
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 LazyRow {
-                    items(listDummy) {
+                    items(featuredStore, key = { it.id }) { item ->
                         CardStore(
-                            name = "Toko Pak Tude",
-                            address = "Jl. Donut Ubi Mawar Terbang III",
-                            image = null
+                            name = item.name,
+                            address = item.address,
+                            image = item.image,
+                            onCLick = {
+                                navController.navigate(NavigationRoutes.Main.ComingSoon.route)
+                            }
                         )
                         Spacer(modifier = Modifier.width(20.dp))
                     }
@@ -194,6 +203,7 @@ fun HomeScreen(
                     )
                     Spacer(modifier = Modifier.height(15.dp))
                 }
+                Spacer(modifier = Modifier.height(5.dp))
             }
             PullRefreshIndicator(refreshing = state.isLoading, state = pullRefreshState)
         }

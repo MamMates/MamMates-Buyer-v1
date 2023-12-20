@@ -10,11 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -44,6 +45,8 @@ fun LoginScreen(
     onEvent: (LoginEvent) -> Unit
 ) {
 
+    val scrollState = rememberScrollState()
+
     LaunchedEffect(key1 = state.isAuth) {
         if (state.isAuth) {
             navController.navigate(NavigationRoutes.Main.route) {
@@ -57,7 +60,7 @@ fun LoginScreen(
     if (!state.errorMessage.isNullOrEmpty()) {
         AlertDialog(
             title = {
-                Text(text = "Register Failed")
+                Text(text = "Login Failed")
             },
             text = {
                 Text(
@@ -97,6 +100,7 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(scrollState)
                 .padding(horizontal = 35.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -178,6 +182,7 @@ fun LoginScreen(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }

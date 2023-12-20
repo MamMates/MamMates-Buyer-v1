@@ -2,6 +2,7 @@ package com.mammates.mammates_buyer_v1.di
 
 import android.content.Context
 import com.mammates.mammates_buyer_v1.common.Constants
+import com.mammates.mammates_buyer_v1.data.repository.AccountRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.repository.AuthRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.repository.FoodRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.repository.IntroRepositoryImpl
@@ -10,11 +11,17 @@ import com.mammates.mammates_buyer_v1.data.repository.TokenRepositoryImpl
 import com.mammates.mammates_buyer_v1.data.source.local.IntroPreference
 import com.mammates.mammates_buyer_v1.data.source.local.TokenPreference
 import com.mammates.mammates_buyer_v1.data.source.remote.MamMatesApi
+import com.mammates.mammates_buyer_v1.domain.repository.AccountRepository
 import com.mammates.mammates_buyer_v1.domain.repository.AuthRepository
 import com.mammates.mammates_buyer_v1.domain.repository.FoodRepository
 import com.mammates.mammates_buyer_v1.domain.repository.IntroRepository
 import com.mammates.mammates_buyer_v1.domain.repository.OrderRepository
 import com.mammates.mammates_buyer_v1.domain.repository.TokenRepository
+import com.mammates.mammates_buyer_v1.domain.use_case.account.AccountUseCases
+import com.mammates.mammates_buyer_v1.domain.use_case.account.ChangePasswordUseCase
+import com.mammates.mammates_buyer_v1.domain.use_case.account.GetAccountUseCase
+import com.mammates.mammates_buyer_v1.domain.use_case.account.UpdateAccountUseCase
+import com.mammates.mammates_buyer_v1.domain.use_case.account.UpdateProfilePictureUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthLoginUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthRegisterUseCase
 import com.mammates.mammates_buyer_v1.domain.use_case.auth.AuthUseCases
@@ -120,6 +127,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providesAccountRepository(mamMatesApi: MamMatesApi): AccountRepository {
+        return AccountRepositoryImpl(mamMatesApi)
+    }
+
+    @Provides
+    @Singleton
     fun providesIntroUseCase(introRepository: IntroRepository): IntroUseCases {
         return IntroUseCases(
             getIntroIsDoneUseCase = GetIntroIsDoneUseCase(introRepository),
@@ -163,6 +176,17 @@ object AppModule {
             getOrdersUseCase = GetOrdersUseCase(orderRepository),
             getOrderDetailUseCase = GetOrderDetailUseCase(orderRepository),
             postOrderUseCase = PostOrderUseCase(orderRepository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun providesAccountUseCase(accountRepository: AccountRepository): AccountUseCases {
+        return AccountUseCases(
+            getAccountUseCase = GetAccountUseCase(accountRepository),
+            updateAccountUseCase = UpdateAccountUseCase(accountRepository),
+            updateProfilePictureUseCase = UpdateProfilePictureUseCase(accountRepository),
+            changePasswordUseCase = ChangePasswordUseCase(accountRepository)
         )
     }
 }

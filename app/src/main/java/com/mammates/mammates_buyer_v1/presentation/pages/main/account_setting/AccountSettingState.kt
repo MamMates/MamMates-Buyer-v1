@@ -4,13 +4,8 @@ import android.net.Uri
 
 data class AccountSettingState(
     val fullName: String = "",
-    val storeNameValidation: String? = null,
+    val fullNameValidation: String? = null,
 
-    val storeAddress: String = "",
-    val storeAddressValidation: String? = null,
-
-    val name: String = "",
-    val nameValidation: String? = null,
 
     val email: String = "",
     val emailValidation: String? = null,

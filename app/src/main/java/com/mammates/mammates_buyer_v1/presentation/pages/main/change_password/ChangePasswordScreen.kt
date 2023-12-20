@@ -51,7 +51,7 @@ fun ChangePasswordScreen(
         ErrorDialog(
             message = HttpError.UNAUTHORIZED.message,
             onConfirm = {
-                onEvent(ChangePasswordEvent.OnDismissNotAuthorize)
+                onEvent(ChangePasswordEvent.ClearToken)
             }
         )
     }
@@ -82,7 +82,7 @@ fun ChangePasswordScreen(
             message = state.successMessage,
             onConfirm = {
                 onEvent(ChangePasswordEvent.OnDismissDialog)
-                navController.popBackStack()
+                onEvent(ChangePasswordEvent.ClearToken)
             }
         )
     }
@@ -163,6 +163,7 @@ fun ChangePasswordScreen(
             ) {
                 Text(text = "Change")
             }
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }

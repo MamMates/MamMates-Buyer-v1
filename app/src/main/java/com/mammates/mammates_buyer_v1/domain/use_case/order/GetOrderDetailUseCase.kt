@@ -27,7 +27,7 @@ class GetOrderDetailUseCase @Inject constructor(
             orderDetail?.let {
                 emit(Resource.Success(it))
             }
-        }catch (e: HttpException) {
+        } catch (e: HttpException) {
             val errorMessage = e.response()?.errorBody()
             errorMessage?.let {
                 try {

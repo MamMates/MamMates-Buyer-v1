@@ -85,7 +85,6 @@ class MainActivity : ComponentActivity() {
                                 TopNavigation()
                             } else if (
                                 currentRoute != NavigationRoutes.Auth.Login.route &&
-                                currentRoute != NavigationRoutes.Auth.Register.route &&
                                 currentRoute != NavigationRoutes.Introduction.route
                             ) {
                                 TopBackNavigation(navController = navController)

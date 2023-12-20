@@ -22,7 +22,6 @@ import com.mammates.mammates_buyer_v1.domain.model.FoodSearch
 import com.mammates.mammates_buyer_v1.presentation.component.dialog.ErrorDialog
 import com.mammates.mammates_buyer_v1.presentation.component.loading.LoadingScreen
 import com.mammates.mammates_buyer_v1.presentation.component.text_field.SearchTextField
-import com.mammates.mammates_buyer_v1.presentation.pages.main.order.OrderEvent
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.component.CardSearchFood
 import com.mammates.mammates_buyer_v1.presentation.pages.main.search.component.SearchNotFound
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
@@ -105,7 +104,7 @@ fun SearchScreen(
                 )
             } else {
                 LazyColumn {
-                    items(foods) {item ->
+                    items(foods) { item ->
                         CardSearchFood(
                             rating = item.rating,
                             foodName = item.name,

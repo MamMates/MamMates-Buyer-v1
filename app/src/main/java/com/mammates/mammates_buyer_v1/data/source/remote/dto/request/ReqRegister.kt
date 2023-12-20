@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class ReqRegister(
 
-    @field:SerializedName("buyer")
-    val buyer: String,
+    @field:SerializedName("name")
+    val name: String,
 
     @field:SerializedName("email")
     val email: String,
@@ -15,6 +15,4 @@ data class ReqRegister(
 
     @field:SerializedName("password_repeat")
     val passwordRepeat: String,
-
-
-    )
+)

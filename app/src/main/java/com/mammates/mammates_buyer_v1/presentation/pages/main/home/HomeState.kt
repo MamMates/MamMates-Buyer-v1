@@ -8,8 +8,8 @@ data class HomeState(
     val isLoading: Boolean = false,
     val searchText: String = "",
     val isActiveSearch: Boolean = false,
-    val isRefresh : Boolean = false,
-    val errorMessage : String? = null,
-    val isNotAuthorizeDialogOpen : Boolean = false,
-    val foodsRecommendation : List<FoodRecommendation> = emptyList()
+    val isRefresh: Boolean = false,
+    val errorMessage: String? = null,
+    val isNotAuthorizeDialogOpen: Boolean = false,
+    val foodsRecommendation: List<FoodRecommendation> = emptyList()
 )

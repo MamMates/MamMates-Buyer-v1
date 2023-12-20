@@ -1,9 +1,9 @@
 package com.mammates.mammates_buyer_v1.data.repository
 
 import com.mammates.mammates_buyer_v1.data.source.remote.MamMatesApi
+import com.mammates.mammates_buyer_v1.data.source.remote.dto.ResMamMates
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.request.ReqLogin
 import com.mammates.mammates_buyer_v1.data.source.remote.dto.request.ReqRegister
-import com.mammates.mammates_buyer_v1.data.source.remote.dto.request.ResMamMates
 import com.mammates.mammates_buyer_v1.domain.repository.AuthRepository
 import retrofit2.Response
 import javax.inject.Inject
@@ -18,14 +18,14 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun authRegister(
-        buyer: String,
+        name: String,
         email: String,
         password: String,
         passwordConfirm: String
     ): ResMamMates<String> {
         return api.authRegister(
             reqRegister = ReqRegister(
-                buyer = buyer,
+                name = name,
                 email = email,
                 password = password,
                 passwordRepeat = passwordConfirm

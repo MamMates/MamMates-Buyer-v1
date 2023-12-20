@@ -31,7 +31,7 @@ import com.mammates.mammates_buyer_v1.util.HttpError
 @Composable
 fun AccountSettingScreen(
     navController: NavController,
-    state : AccountSettingState,
+    state: AccountSettingState,
     onEvent: (AccountSettingEvent) -> Unit
 ) {
     val context = LocalContext.current
@@ -47,27 +47,12 @@ fun AccountSettingScreen(
         )
     }
 
-    LaunchedEffect(key1 = state.token) {
-        if (state.token.isEmpty()) {
-            navController.navigate(route = NavigationRoutes.Auth.route) {
-                popUpTo(route = NavigationRoutes.Main.route) {
-                    inclusive = true
-                }
-            }
-        }
-    }
-
     if (!state.successMessage.isNullOrEmpty()) {
         SuccessDialog(
-            message = state.successMessage,
+            message = state.successMessage + ", please login again!",
             onConfirm = {
                 onEvent(AccountSettingEvent.OnDismissDialog)
-                navController.navigate(NavigationRoutes.Main.Account.route) {
-                    popUpTo(NavigationRoutes.Main.AccountSetting.route) {
-                        inclusive = true
-                    }
-                    launchSingleTop = true
-                }
+                onEvent(AccountSettingEvent.ClearToken)
             }
         )
     }
@@ -91,6 +76,16 @@ fun AccountSettingScreen(
                 onEvent(AccountSettingEvent.OnDismissDialog)
             }
         )
+    }
+
+    LaunchedEffect(key1 = state.token) {
+        if (state.token.isEmpty()) {
+            navController.navigate(route = NavigationRoutes.Auth.route) {
+                popUpTo(route = NavigationRoutes.Main.route) {
+                    inclusive = true
+                }
+            }
+        }
     }
 
     LaunchedEffect(key1 = state.token) {
@@ -143,7 +138,7 @@ fun AccountSettingScreen(
                 onValueChange = {
                     onEvent(AccountSettingEvent.OnChangeFullName(it))
                 },
-                errorResult = state.storeNameValidation,
+                errorResult = state.fullNameValidation,
                 label = "Full Name",
                 description = "Keep your identity fresh – update your full name to reflect any changes or new beginnings in your culinary journey."
             )
@@ -166,6 +161,7 @@ fun AccountSettingScreen(
                 }) {
                 Text(text = "Save Update")
             }
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
 }
