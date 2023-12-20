@@ -46,7 +46,7 @@ import com.mammates.mammates_buyer_v1.presentation.pages.main.home.component.car
 import com.mammates.mammates_buyer_v1.presentation.util.navigation.NavigationRoutes
 import com.mammates.mammates_buyer_v1.util.HttpError
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     navController: NavController, state: HomeState, onEvent: (HomeEvent) -> Unit
